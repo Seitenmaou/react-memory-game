@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './Card.module.css';
+import './CardModule.css';
 
-const Card_front = ({id}) => {
-  return <div className={styles.card_front}>{id}</div>;
+const Card_front = ({id, value}) => {
+  return <div className="card_front">{value}</div>;
 };
 
 export default Card_front;

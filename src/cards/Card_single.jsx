@@ -1,13 +1,19 @@
 import Card_front from "./Card_front"
 import Card_back from "./Card_back"
 
-const Card_single = ({card}) =>{
+const Card_single = ({card, handleChoice, isFlipped}) =>{
+    const handleClick = () => {
+        handleChoice(card)
+    }
+
     return (
-        <div>
-            <Card_front id={card.id}/>
-            <Card_back/>
+        <div className='card'>
+          <div className={isFlipped ? "flipped" : ""}>
+            <Card_front id={card.id} value={card.visual}/>
+            <Card_back onClick={handleClick}/>
+          </div>
         </div>
     )
 }
 
-export default Card_single
+export default Card_single;
