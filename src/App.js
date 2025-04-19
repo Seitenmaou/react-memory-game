@@ -1,6 +1,7 @@
 import './App.css';
 import {useState, useEffect} from 'react';
 import Card_single from './cards/Card_single';
+import ConfirmModal from './popUpWindow/ConfirmModal';
 
 const possibleCards = 6;
 
@@ -9,10 +10,13 @@ function App() {
   const [turns, setTurns] = useState(0);
   const [firstCard, setFirstCard] = useState(null);
   const [secondCard, setSecondCard] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [matchedPairs, setMatchedPairs] = useState(0);
 
   const createCards = () => {
     setFirstCard(null)
     setSecondCard(null)
+    setMatchedPairs(0)
     setTurns(0);
 
     const newCards = Array.from({ length: possibleCards }, (_, i) => [
@@ -38,9 +42,10 @@ function App() {
     setTurns(prevTurn => prevTurn + 1)
   }
 
-  useEffect(() => {
-    createCards();
-  }, []);
+  const resetGame = () => {
+    const timer = setTimeout(() => createCards(), 1000);
+    return () => clearTimeout(timer);
+  }
 
   useEffect(() => {
     if (firstCard && secondCard) {
@@ -51,6 +56,8 @@ function App() {
             : card
         );
         setCards(updated);
+        setMatchedPairs(prev => prev + 1)
+        console.log(matchedPairs)
         resetTurns()
       }
 
@@ -60,13 +67,25 @@ function App() {
     }
   }, [firstCard, secondCard]);
 
+  useEffect(() => {
+    if (matchedPairs === possibleCards) {
+      const timer = setTimeout(() => setShowModal(true), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [matchedPairs]);
+
   // debug here
   console.log(cards)
+
+  // start game
+  useEffect(() => {
+    createCards();
+  }, []);
 
   return (
     <div className="App">
       <h1> Game </h1>
-      <button onClick={createCards}>New Game</button>
+      <button onClick={() => setShowModal(true)}>New Game</button>
       <p> Turn: {turns} </p>
       
 
@@ -80,7 +99,18 @@ function App() {
             />
           </div>
         ))}
-        
+      </div>
+
+      <div>
+        <ConfirmModal
+          open={showModal}
+          message = {matchedPairs === possibleCards ? "Congratulation! Do you want to start a new game?" : "Start a new game?" }
+          onCancel={() => setShowModal(false)}
+          onConfirm={() => {
+            resetGame();
+            setShowModal(false);
+          }}
+        />
       </div>
     </div>
   );
