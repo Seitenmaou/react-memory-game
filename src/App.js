@@ -3,8 +3,10 @@ import {useState, useEffect} from 'react';
 import Card_single from './cards/Card_single';
 import ConfirmModal from './popUpWindow/ConfirmModal';
 
+// Number of pairs of cards to be created
 const possibleCards = 6;
 
+// App component
 function App() {
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
@@ -14,23 +16,27 @@ function App() {
   const [matchedPairs, setMatchedPairs] = useState(0);
   const [disabled, setDisabled] = useState(false);
 
+  // Function to create and shuffle cards
   const createCards = () => {
+    setCards([]);
     setFirstCard(null)
     setSecondCard(null)
     setMatchedPairs(0)
     setTurns(0);
 
+    // Create pairs of cards
     const newCards = Array.from({ length: possibleCards }, (_, i) => [
       { visual: i, id: 0 },
       { visual: i, id: 0 }
     ]).flat();
 
+    // Shuffle the cards and assign unique IDs
     const shuffledCards = newCards
       .sort(() => Math.random() - 0.5)
       .map((card, index) => ({...card, id: index, matched: false}));
 
+      // Set the shuffled cards to state
     setCards(shuffledCards.sort(() => Math.random() - 0.5));
-    setTurns(0);
   }
 
   const handleChoice = (card) => {
