@@ -2,7 +2,7 @@
 import React from "react";
 import "./ConfirmModal.css";
 
-export default function ConfirmModal({ open, message, onConfirm, onCancel }) {
+export default function ConfirmModal({ open, message, onConfirm, onCancel, leaderboard }) {
   if (!open) return null;       
 
   return (
@@ -13,6 +13,10 @@ export default function ConfirmModal({ open, message, onConfirm, onCancel }) {
         <div className="actions">
           <button className="btn cancel" onClick={onCancel}>
             Cancel
+          </button>
+
+          <button className="btn leaderboard" onClick={leaderboard}>
+            Leaderboard
           </button>
 
           <button className="btn confirm" onClick={onConfirm}>

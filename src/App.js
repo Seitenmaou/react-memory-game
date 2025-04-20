@@ -2,6 +2,7 @@ import './App.css';
 import {useState, useEffect} from 'react';
 import Card_single from './cards/Card_single';
 import ConfirmModal from './popUpWindow/ConfirmModal';
+import Leaderboard from './leaderboard/leaderboard';
 
 // Number of pairs of cards to be created
 const possibleCards = 6;
@@ -15,6 +16,7 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [matchedPairs, setMatchedPairs] = useState(0);
   const [disabled, setDisabled] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   // Function to create and shuffle cards
   const createCards = () => {
@@ -116,11 +118,21 @@ function App() {
           open={showModal}
           message = {matchedPairs === possibleCards ? "Congratulation! Do you want to start a new game?" : "Start a new game?" }
           onCancel={() => setShowModal(false)}
+          leaderboard={() => {
+            setShowLeaderboard(true);
+          }}
           onConfirm={() => {
             resetGame();
             setShowModal(false);
           }}
         />
+      </div>
+      <div>
+        <Leaderboard 
+         open={showLeaderboard}
+         close={() => setShowLeaderboard(false)}
+         newScore={turns}
+         />
       </div>
     </div>
   );
