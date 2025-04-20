@@ -18,7 +18,6 @@ function App() {
 
   // Function to create and shuffle cards
   const createCards = () => {
-    setCards([]);
     setFirstCard(null)
     setSecondCard(null)
     setMatchedPairs(0)
@@ -40,7 +39,7 @@ function App() {
   }
 
   const handleChoice = (card) => {
-    if(card.id === firstCard?.id) return;
+    // if(card.id === firstCard?.id) return;
     firstCard ? setSecondCard(card) : setFirstCard(card)
   }
 
