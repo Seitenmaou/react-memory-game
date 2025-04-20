@@ -12,6 +12,7 @@ function App() {
   const [secondCard, setSecondCard] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [matchedPairs, setMatchedPairs] = useState(0);
+  const [disabled, setDisabled] = useState(false);
 
   const createCards = () => {
     setFirstCard(null)
@@ -40,6 +41,7 @@ function App() {
     setFirstCard(null)
     setSecondCard(null)
     setTurns(prevTurn => prevTurn + 1)
+    setDisabled(false);
   }
 
   const resetGame = () => {
@@ -49,6 +51,7 @@ function App() {
 
   useEffect(() => {
     if (firstCard && secondCard) {
+      setDisabled(true)
       if (firstCard.visual === secondCard.visual) {
         const updated = cards.map(card =>
           card.visual === firstCard.visual
@@ -96,6 +99,7 @@ function App() {
               card={card}
               handleChoice={() => handleChoice(card)}
               isFlipped={card === firstCard || card === secondCard || card.matched}
+              disabled={disabled}
             />
           </div>
         ))}

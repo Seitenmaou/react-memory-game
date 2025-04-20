@@ -1,9 +1,11 @@
 import Card_front from "./Card_front"
 import Card_back from "./Card_back"
 
-const Card_single = ({card, handleChoice, isFlipped}) =>{
+const Card_single = ({card, handleChoice, isFlipped, disabled}) =>{
     const handleClick = () => {
+      if (!disabled) {
         handleChoice(card)
+      }
     }
 
     return (
