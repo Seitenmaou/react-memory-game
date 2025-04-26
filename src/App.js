@@ -1,8 +1,9 @@
 import './App.css';
 import {useState, useEffect} from 'react';
 import Card_single from './cards/Card_single';
-import ConfirmModal from './popUpWindow/ConfirmModal';
-import Leaderboard from './leaderboard/leaderboard';
+import SaveScoreModal from './leaderboard/SaveScoreModal';
+import Leaderboard from './leaderboard/Leaderboard';
+
 
 // Number of pairs of cards to be created
 const possibleCards = 6;
@@ -14,6 +15,7 @@ function App() {
   const [firstCard, setFirstCard] = useState(null);
   const [secondCard, setSecondCard] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showSave, setShowSave] = useState(false);
   const [matchedPairs, setMatchedPairs] = useState(0);
   const [disabled, setDisabled] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
@@ -53,7 +55,9 @@ function App() {
   }
 
   const resetGame = () => {
-    const timer = setTimeout(() => createCards(), 1000);
+    const timer = setTimeout(() => {
+      createCards();
+    }, 1000);
     return () => clearTimeout(timer);
   }
 
@@ -68,7 +72,6 @@ function App() {
         );
         setCards(updated);
         setMatchedPairs(prev => prev + 1)
-        console.log(matchedPairs)
         resetTurns()
       }
 
@@ -80,13 +83,10 @@ function App() {
 
   useEffect(() => {
     if (matchedPairs === possibleCards) {
-      const timer = setTimeout(() => setShowModal(true), 1000);
-      return () => clearTimeout(timer);
-    }
+        const timer = setTimeout(() => setShowSave(true), 1500); 
+        return () => clearTimeout(timer); 
+      }
   }, [matchedPairs]);
-
-  // debug here
-  console.log(cards)
 
   // start game
   useEffect(() => {
@@ -95,11 +95,13 @@ function App() {
 
   return (
     <div className="App">
-      <h1> Game </h1>
-      <button onClick={() => setShowModal(true)}>New Game</button>
-      <p> Turn: {turns} </p>
+      <div className="header">
+        <h1> React Memory Game </h1>
+        <button onClick={() => setShowModal(true)}>New Game</button>
+        <button onClick={() => setShowLeaderboard(true)}>Leaderboard</button>
+        <p> Turn: {turns} </p>
+      </div>
       
-
       <div className='card-grid'>
         {cards.map(card => (
           <div className='cards' key={card.id}>
@@ -114,24 +116,34 @@ function App() {
       </div>
 
       <div>
-        <ConfirmModal
+        <SaveScoreModal
           open={showModal}
-          message = {matchedPairs === possibleCards ? "Congratulation! Do you want to start a new game?" : "Start a new game?" }
+          message = {"Start a new game?" }
           onCancel={() => setShowModal(false)}
-          leaderboard={() => {
-            setShowLeaderboard(true);
-          }}
           onConfirm={() => {
             resetGame();
             setShowModal(false);
           }}
         />
       </div>
+
+      <div>
+        <SaveScoreModal
+          open = {showSave}
+          askName = {true}
+          score={turns}
+          onCancel={() => setShowSave(false)}  
+          onConfirm={() => {
+            resetGame();
+            setShowSave(false);
+          }}
+        />
+      </div>
+
       <div>
         <Leaderboard 
          open={showLeaderboard}
-         close={() => setShowLeaderboard(false)}
-         newScore={turns}
+         onClose={() => setShowLeaderboard(false)}
          />
       </div>
     </div>

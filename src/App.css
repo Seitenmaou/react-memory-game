@@ -2,9 +2,6 @@
   text-align: center;
   font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
-h1, p{
-  color: white;
-}
 
 body {
   background-color: #000;
@@ -17,8 +14,34 @@ body {
 .card-grid{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  z-index: 1;
 }
 
 .cards{
   margin: 5px;
 }
+
+.header {
+  position: relative; 
+  z-index: 500;
+}
+.header h1{
+  font-size: 2.5rem;
+  color: white;
+}
+.header button {
+  padding: 6px 14px;
+  margin: 4px;
+  background: #cabed8;
+  color:#000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 800;
+}
+.header p {
+  margin-top: 0px;
+  font-size: 1rem;
+  color: white;
+}
+
