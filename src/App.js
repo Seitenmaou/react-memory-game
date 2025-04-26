@@ -18,6 +18,7 @@ function App() {
   const [showSave, setShowSave] = useState(false);
   const [matchedPairs, setMatchedPairs] = useState(0);
   const [disabled, setDisabled] = useState(false);
+  const [skipAnim, setSkipAnim] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   // Function to create and shuffle cards
@@ -55,10 +56,9 @@ function App() {
   }
 
   const resetGame = () => {
-    const timer = setTimeout(() => {
-      createCards();
-    }, 1000);
-    return () => clearTimeout(timer);
+    setSkipAnim(true); 
+    createCards();
+    setTimeout(() => setSkipAnim(false), 0);
   }
 
   useEffect(() => {
@@ -110,6 +110,7 @@ function App() {
               handleChoice={() => handleChoice(card)}
               isFlipped={card === firstCard || card === secondCard || card.matched}
               disabled={disabled}
+              skipAnim={skipAnim}  
             />
           </div>
         ))}
@@ -135,7 +136,9 @@ function App() {
           onCancel={() => setShowSave(false)}  
           onConfirm={() => {
             resetGame();
-            setShowSave(false);
+            setTimeout(() => {
+              setShowSave(false);
+            }, 500);
           }}
         />
       </div>

@@ -64,3 +64,8 @@
   transition-delay: 0s;
 }
 
+.no-transition .card_front,
+.no-transition .card_back {
+  transition: none !important;
+}
+
