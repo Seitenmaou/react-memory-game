@@ -1,6 +1,6 @@
 import './App.css';
 import {useState, useEffect} from 'react';
-import Card_single from './cards/Card_single';
+import CardSingle from './cards/CardSingle';
 import SaveScoreModal from './leaderboard/SaveScoreModal';
 import Leaderboard from './leaderboard/leaderboard';
 
@@ -105,7 +105,7 @@ function App() {
       <div className='card-grid'>
         {cards.map(card => (
           <div className='cards' key={card.id}>
-            <Card_single 
+            <CardSingle 
               card={card}
               handleChoice={() => handleChoice(card)}
               isFlipped={card === firstCard || card === secondCard || card.matched}

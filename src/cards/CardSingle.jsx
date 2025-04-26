@@ -1,5 +1,5 @@
-import Card_front from "./Card_front"
-import Card_back from "./Card_back"
+import CardFront from "./CardFront"
+import CardBack from "./CardBack"
 
 const Card_single = ({card, handleChoice, isFlipped, disabled, skipAnim}) =>{
     const handleClick = () => {
@@ -11,8 +11,8 @@ const Card_single = ({card, handleChoice, isFlipped, disabled, skipAnim}) =>{
     return (
         <div className={`card ${skipAnim ? "no-transition" : ""}`}>
           <div className={isFlipped ? "flipped" : ""}>
-            <Card_front id={card.id} value={card.visual}/>
-            <Card_back onClick={handleClick}/>
+            <CardFront id={card.id} value={card.visual}/>
+            <CardBack onClick={handleClick}/>
           </div>
         </div>
     )
