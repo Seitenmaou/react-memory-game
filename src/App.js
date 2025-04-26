@@ -63,23 +63,23 @@ function App() {
 
   useEffect(() => {
     if (firstCard && secondCard) {
-      setDisabled(true)
+      setDisabled(true);
       if (firstCard.visual === secondCard.visual) {
-        const updated = cards.map(card =>
-          card.visual === firstCard.visual
-            ? { ...card, matched: true }
-            : card
-        );
-        setCards(updated);
-        setMatchedPairs(prev => prev + 1)
-        resetTurns()
-      }
-
-      else {
+        setCards(prevCards => {
+          return prevCards.map(card =>
+            card.visual === firstCard.visual
+              ? { ...card, matched: true }
+              : card
+          );
+        });
+        setMatchedPairs(prev => prev + 1);
+        resetTurns();
+      } else {
         setTimeout(() => resetTurns(), 1000);
       }
     }
   }, [firstCard, secondCard]);
+  
 
   useEffect(() => {
     if (matchedPairs === possibleCards) {
