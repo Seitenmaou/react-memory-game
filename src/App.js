@@ -2,7 +2,7 @@ import './App.css';
 import {useState, useEffect} from 'react';
 import Card_single from './cards/Card_single';
 import SaveScoreModal from './leaderboard/SaveScoreModal';
-import Leaderboard from './leaderboard/Leaderboard';
+import Leaderboard from './leaderboard/leaderboard';
 
 
 // Number of pairs of cards to be created
