@@ -50,6 +50,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;                
+    overflow: hidden;
 }
 
 .leader {
@@ -62,6 +63,7 @@
     width: 90%;
     box-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
     text-align: center;         
+    z-index: 1;
 }
 
 .leader h2{
@@ -101,3 +103,41 @@
     opacity: 0.85;
 }
 
+
+/* floating tophies in leaderboard */
+.floating-trophies {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .floating-trophies .fa-trophy {
+    position: absolute;
+    color: #6a0dad;
+    opacity: 0.8;
+    animation-name: float, spin;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  
+  /* trophy animations */
+  @keyframes float {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+      transform: translate(
+        calc(200vw * cos(var(--angle, 45deg))),
+        calc(200vh * sin(var(--angle, 45deg)))
+      );
+    }
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
