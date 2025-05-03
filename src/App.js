@@ -95,6 +95,29 @@ function App() {
 
   return (
     <div className="App">
+      <div className="floating-sparkles">
+  {[...Array(40)].map((_, i) => {
+    const size = 2 + Math.random() * 4;
+    const opacity = 0.3 + Math.random() * 0.5;
+    return (
+      <div
+        key={i}
+        className="sparkle"
+        style={{
+          width: `${size}px`,
+          height: `${size}px`,
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100 + 100}%`,
+          animationDuration: `${5 + Math.random() * 5}s`,
+          animationDelay: `${Math.random() * 5}s`,
+          opacity,
+        }}
+      />
+    );
+  })}
+</div>
+
+
       <div className="header">
         <h1> React Memory Game </h1>
         <button onClick={() => setShowModal(true)}>New Game</button>
